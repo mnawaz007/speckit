@@ -149,7 +149,7 @@ describe('Validation Utilities', () => {
   describe('validateCalculationForm()', () => {
     describe('Valid Forms', () => {
       it('should validate complete valid form', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 3,
           operator: '+'
@@ -161,7 +161,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should validate with decimal numbers', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 2.5,
           operand2: 3.75,
           operator: '+'
@@ -171,7 +171,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should validate with negative numbers', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: -5,
           operand2: 3,
           operator: '−'
@@ -184,7 +184,7 @@ describe('Validation Utilities', () => {
         const operators = ['+', '−', '×', '÷'];
 
         operators.forEach(op => {
-          const errors = validateCalculationForm({
+          const { errors } = validateCalculationForm({
             operand1: 5,
             operand2: 3,
             operator: op
@@ -195,7 +195,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should validate with zero', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 0,
           operand2: 0,
           operator: '+'
@@ -207,7 +207,7 @@ describe('Validation Utilities', () => {
 
     describe('Invalid Forms - Missing Fields', () => {
       it('should reject missing operand1', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand2: 3,
           operator: '+'
         });
@@ -217,7 +217,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject missing operand2', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operator: '+'
         });
@@ -227,7 +227,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject missing operator', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 3
         });
@@ -237,7 +237,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject all missing fields', () => {
-        const errors = validateCalculationForm({});
+        const { errors } = validateCalculationForm({});
 
         expect(errors.operand1).toBeDefined();
         expect(errors.operand2).toBeDefined();
@@ -247,7 +247,7 @@ describe('Validation Utilities', () => {
 
     describe('Invalid Forms - Invalid Values', () => {
       it('should reject invalid operand1', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 'abc',
           operand2: 3,
           operator: '+'
@@ -257,7 +257,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject invalid operand2', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 'xyz',
           operator: '+'
@@ -267,7 +267,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject invalid operator', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 3,
           operator: '%'
@@ -277,7 +277,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should reject multiple invalid fields', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 'abc',
           operand2: 'xyz',
           operator: '!'
@@ -291,7 +291,7 @@ describe('Validation Utilities', () => {
 
     describe('Return Value Structure', () => {
       it('should return object with field keys', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 3,
           operator: '+'
@@ -302,7 +302,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should not include keys for valid fields', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 5,
           operand2: 3,
           operator: '+'
@@ -312,7 +312,7 @@ describe('Validation Utilities', () => {
       });
 
       it('should include error messages for invalid fields', () => {
-        const errors = validateCalculationForm({
+        const { errors } = validateCalculationForm({
           operand1: 'abc',
           operand2: 3,
           operator: '+'
@@ -454,7 +454,7 @@ describe('Validation Utilities', () => {
         operator: '+'
       };
 
-      const errors = validateCalculationForm(form);
+      const { errors } = validateCalculationForm(form);
       expect(Object.keys(errors).length).toBe(0);
 
       const result = 6.25;
@@ -469,7 +469,7 @@ describe('Validation Utilities', () => {
         operator: '−'
       };
 
-      const errors = validateCalculationForm(form);
+      const { errors } = validateCalculationForm(form);
       expect(Object.keys(errors).length).toBe(0);
 
       const result = 8.0;
@@ -484,7 +484,7 @@ describe('Validation Utilities', () => {
         operator: '%'
       };
 
-      const errors = validateCalculationForm(form);
+      const { errors } = validateCalculationForm(form);
       expect(Object.keys(errors).length).toBeGreaterThan(0);
     });
 
@@ -495,7 +495,7 @@ describe('Validation Utilities', () => {
         operator: '÷'
       };
 
-      const errors = validateCalculationForm(form);
+      const { errors } = validateCalculationForm(form);
       expect(Object.keys(errors).length).toBe(0);
 
       const result = 6.66666667;

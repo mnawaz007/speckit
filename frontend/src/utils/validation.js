@@ -22,7 +22,20 @@ export function validateNumber(value) {
     return false
   }
 
-  const num = parseFloat(value)
+  // Check if it's a number type
+  if (typeof value === 'number') {
+    return !isNaN(value) && isFinite(value)
+  }
+
+  // Convert to string for regex validation
+  const str = String(value).trim()
+
+  // Reject if contains special characters (anything other than digits, minus, dot)
+  if (!/^-?\d+(\.\d+)?$/.test(str)) {
+    return false
+  }
+
+  const num = parseFloat(str)
   return !isNaN(num) && isFinite(num)
 }
 
@@ -60,17 +73,23 @@ export function validateCalculationForm(formData) {
   const errors = {}
 
   // Validate operand1
-  if (!formData.operand1 || !validateNumber(formData.operand1)) {
+  if (!formData.operand1 && formData.operand1 !== 0) {
+    errors.operand1 = 'operand1 is required'
+  } else if (!validateNumber(formData.operand1)) {
     errors.operand1 = 'Please enter a valid number'
   }
 
   // Validate operand2
-  if (!formData.operand2 || !validateNumber(formData.operand2)) {
+  if (!formData.operand2 && formData.operand2 !== 0) {
+    errors.operand2 = 'operand2 is required'
+  } else if (!validateNumber(formData.operand2)) {
     errors.operand2 = 'Please enter a valid number'
   }
 
   // Validate operator
-  if (!formData.operator || !validateOperator(formData.operator)) {
+  if (!formData.operator) {
+    errors.operator = 'operator is required'
+  } else if (!validateOperator(formData.operator)) {
     errors.operator = 'Please select a valid operator'
   }
 
