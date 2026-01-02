@@ -21,10 +21,13 @@ def create_app():
     app.config['TESTING'] = False
 
     # Enable CORS for frontend requests
-    # In development, allow all origins from localhost:5173
-    # In production, restrict to specific domain
-    cors_origins = os.getenv('CORS_ORIGINS', 'http://localhost:5173')
-    CORS(app, resources={r'/api/*': {'origins': cors_origins.split(',')}})
+    if app.config['DEBUG']:
+        # In development, allow all requests from localhost on any port
+        CORS(app, resources={r'/api/*': {'origins': r'http://localhost:.*'}})
+    else:
+        # In production, restrict to specific domain
+        cors_origins = os.getenv('CORS_ORIGINS', 'https://yourdomain.com')
+        CORS(app, resources={r'/api/*': {'origins': cors_origins.split(',')}})
 
     # Register error handlers
     register_error_handlers(app)

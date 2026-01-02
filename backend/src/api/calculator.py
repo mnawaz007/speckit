@@ -13,6 +13,22 @@ from src.services.calculator_service import calculate
 bp = Blueprint('calculator', __name__, url_prefix='/api')
 
 
+@bp.route('/health', methods=['GET'])
+def health():
+    """
+    Health check endpoint to verify API is running.
+
+    HTTP Method: GET
+    URL: /api/health
+
+    Success Response (HTTP 200):
+    {
+        "status": "healthy"
+    }
+    """
+    return jsonify({'status': 'healthy'}), 200
+
+
 @bp.route('/calculate', methods=['POST'])
 def perform_calculation():
     """
