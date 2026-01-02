@@ -29,9 +29,9 @@ def create_app():
     # Register error handlers
     register_error_handlers(app)
 
-    # Register blueprints (will add later when API routes are ready)
-    # from .api.calculator import bp as calculator_bp
-    # app.register_blueprint(calculator_bp, url_prefix='/api')
+    # Register blueprints
+    from .api.calculator import bp as calculator_bp
+    app.register_blueprint(calculator_bp)
 
     # Health check endpoint
     @app.route('/health', methods=['GET'])
