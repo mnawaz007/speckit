@@ -16,6 +16,11 @@ Note: Floating-point precision follows IEEE 754 standard.
 Example: 1.1 + 2.2 may return 3.3000000000000003 due to binary representation.
 """
 
+import logging
+
+# Configure logger
+logger = logging.getLogger(__name__)
+
 
 def add(operand1, operand2):
     """
@@ -36,7 +41,9 @@ def add(operand1, operand2):
         >>> add(-5, 3)
         -2
     """
-    return operand1 + operand2
+    result = operand1 + operand2
+    logger.info(f"Addition: {operand1} + {operand2} = {result}")
+    return result
 
 
 def subtract(operand1, operand2):
@@ -58,7 +65,9 @@ def subtract(operand1, operand2):
         >>> subtract(-5, 3)
         -8
     """
-    return operand1 - operand2
+    result = operand1 - operand2
+    logger.info(f"Subtraction: {operand1} - {operand2} = {result}")
+    return result
 
 
 def multiply(operand1, operand2):
@@ -80,7 +89,9 @@ def multiply(operand1, operand2):
         >>> multiply(-8, 2)
         -16
     """
-    return operand1 * operand2
+    result = operand1 * operand2
+    logger.info(f"Multiplication: {operand1} × {operand2} = {result}")
+    return result
 
 
 def divide(operand1, operand2):
@@ -111,9 +122,12 @@ def divide(operand1, operand2):
     # Division by zero should be checked before this function is called
     # but we validate here as a safety measure
     if operand2 == 0:
+        logger.error(f"Division by zero attempted: {operand1} ÷ 0")
         raise ValueError("Cannot divide by zero")
 
-    return operand1 / operand2
+    result = operand1 / operand2
+    logger.info(f"Division: {operand1} ÷ {operand2} = {result}")
+    return result
 
 
 def calculate(operand1, operand2, operator):
@@ -140,6 +154,8 @@ def calculate(operand1, operand2, operator):
         >>> calculate(6, 4, '×')
         24
     """
+    logger.debug(f"Calculate called: {operand1} {operator} {operand2}")
+
     if operator == '+':
         return add(operand1, operand2)
     elif operator == '−':
@@ -149,4 +165,5 @@ def calculate(operand1, operand2, operator):
     elif operator == '÷':
         return divide(operand1, operand2)
     else:
+        logger.error(f"Unknown operator: {operator}")
         raise ValueError(f"Unknown operator: {operator}")
